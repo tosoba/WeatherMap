@@ -1,0 +1,59 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+ext {
+    androidArchVersion = "1.0.0"
+}
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    implementation project(":domain")
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // ReactiveX
+    implementation libs.rxJava
+    implementation libs.rxAndroid
+
+    // Room Database
+    compile "android.arch.persistence.room:runtime:$androidArchVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$androidArchVersion"
+    implementation "android.arch.persistence.room:rxjava2:$androidArchVersion"
+    kapt "android.arch.persistence.room:compiler:$androidArchVersion"
+
+    // Gson
+    compile 'com.google.code.gson:gson:2.8.2'
+}
+repositories {
+    mavenCentral()
+}
