@@ -11,7 +11,8 @@ import javax.inject.Singleton
     AndroidSupportInjectionModule::class,
     AppModule::class,
     BuildersModule::class,
-    DatabaseModule::class
+    DatabaseModule::class,
+    ApiModule::class
 ])
 interface AppComponent {
     @Component.Builder
@@ -22,6 +23,8 @@ interface AppComponent {
         fun appModule(appModule: AppModule): Builder
 
         fun databaseModule(databaseModule: DatabaseModule): Builder
+
+        fun apiModule(apiModule: ApiModule): Builder
 
         fun build(): AppComponent
     }

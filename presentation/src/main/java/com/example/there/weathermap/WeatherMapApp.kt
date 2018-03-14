@@ -2,6 +2,7 @@ package com.example.there.weathermap
 
 import android.app.Activity
 import android.app.Application
+import com.example.there.weathermap.di.ApiModule
 import com.example.there.weathermap.di.AppModule
 import com.example.there.weathermap.di.DaggerAppComponent
 import com.example.there.weathermap.di.DatabaseModule
@@ -25,6 +26,7 @@ class WeatherMapApp : Application(), HasActivityInjector {
                 .application(this)
                 .appModule(AppModule(this))
                 .databaseModule(DatabaseModule(this))
+                .apiModule(ApiModule())
                 .build()
                 .inject(this)
     }

@@ -53,6 +53,12 @@ dependencies {
 
     // Gson
     compile 'com.google.code.gson:gson:2.8.2'
+
+    // Retrofit
+    implementation libs.retrofit
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
 }
 repositories {
     mavenCentral()

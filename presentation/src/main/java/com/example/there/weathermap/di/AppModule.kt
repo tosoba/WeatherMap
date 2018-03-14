@@ -5,6 +5,8 @@ import android.content.Context
 import com.example.there.data.city.CityRepository
 import com.example.there.domain.city.BaseCityRepository
 import com.example.there.domain.city.CityInteractor
+import com.example.there.domain.weather.BaseWeatherRepository
+import com.example.there.domain.weather.WeatherInteractor
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -22,4 +24,8 @@ class AppModule(private val app: Application) {
     @Singleton
     @Provides
     fun cityInteractor(repository: BaseCityRepository): CityInteractor = CityInteractor(repository)
+
+    @Singleton
+    @Provides
+    fun weatherInteractor(repository: BaseWeatherRepository): WeatherInteractor = WeatherInteractor(repository)
 }
