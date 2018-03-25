@@ -14,7 +14,7 @@ fun Marker.setWeather(weather: Weather, resources: Resources) {
     val canvas = Canvas(bmp)
 
     val color = Paint()
-    color.textSize = 40f
+    color.textSize = 55f
     color.color = Color.BLACK
 
     val iconDrawable = when (weather.icon) {

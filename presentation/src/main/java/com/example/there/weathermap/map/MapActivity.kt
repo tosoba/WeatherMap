@@ -78,7 +78,8 @@ class MapActivity : AppCompatActivity() {
                 val position = LatLng(city.lat, city.lon)
                 val marker = map?.addMarker(MarkerOptions()
                         .position(position)
-                        .title(city.name))?.apply { setWeather(Weather.loading, resources) }
+                        .title(city.name))
+                        ?.apply { setWeather(Weather.loading, resources) }
                 viewModel.loadWeather(marker!!, { weather, mark -> mark.setWeather(weather, resources) })
                 currentMarkers.add(MapMarker(city, marker))
             }
