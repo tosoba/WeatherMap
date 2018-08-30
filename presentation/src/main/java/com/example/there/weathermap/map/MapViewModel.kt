@@ -7,15 +7,17 @@ import com.example.there.domain.city.CityInteractor
 import com.example.there.domain.weather.Weather
 import com.example.there.domain.weather.WeatherInteractor
 import com.example.there.weathermap.base.BaseViewModel
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class MapViewModel(private val cityInteractor: CityInteractor,
-                   private val weatherInteractor: WeatherInteractor) : BaseViewModel() {
+class MapViewModel @Inject constructor(
+        private val cityInteractor: CityInteractor,
+        private val weatherInteractor: WeatherInteractor
+) : BaseViewModel() {
 
     val citiesInCurrentBounds: MutableLiveData<List<City>> = MutableLiveData()
 

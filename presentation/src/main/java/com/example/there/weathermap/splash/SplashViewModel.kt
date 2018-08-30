@@ -6,9 +6,10 @@ import com.example.there.domain.city.CityInteractor
 import com.example.there.weathermap.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 
-class SplashViewModel(private val interactor: CityInteractor) : BaseViewModel() {
+class SplashViewModel @Inject constructor(private val interactor: CityInteractor) : BaseViewModel() {
 
     fun loadCityData(data: String, onCompleted: () -> Unit) {
         isDbComplete(onDbComplete = {

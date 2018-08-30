@@ -1,6 +1,8 @@
 package com.example.there.weathermap.di
 
+import android.app.Application
 import com.example.there.weathermap.WeatherMapApp
+import com.example.there.weathermap.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
@@ -12,19 +14,14 @@ import javax.inject.Singleton
     AppModule::class,
     BuildersModule::class,
     DatabaseModule::class,
-    ApiModule::class
+    ApiModule::class,
+    PresentationModule::class
 ])
 interface AppComponent {
     @Component.Builder
     interface Builder {
         @BindsInstance
-        fun application(application: WeatherMapApp): Builder
-
-        fun appModule(appModule: AppModule): Builder
-
-        fun databaseModule(databaseModule: DatabaseModule): Builder
-
-        fun apiModule(apiModule: ApiModule): Builder
+        fun application(application: Application): Builder
 
         fun build(): AppComponent
     }

@@ -51,6 +51,17 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:$androidArchVersion"
     kapt "android.arch.persistence.room:compiler:$androidArchVersion"
 
+    // Dagger core
+    compile "com.google.dagger:dagger:$project.daggerVersion"
+    compile "com.google.dagger:dagger-android:$project.daggerVersion"
+    compile "com.google.dagger:dagger-android-support:$project.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$project.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+
+    // Dagger Android
+    annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
+
     // Gson
     compile 'com.google.code.gson:gson:2.8.2'
 

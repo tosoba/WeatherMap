@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.there.weathermap.R
+import com.example.there.weathermap.di.vm.ViewModelFactory
 import com.example.there.weathermap.map.MapActivity
 import dagger.android.AndroidInjection
 import org.apache.commons.io.IOUtils
@@ -15,7 +16,7 @@ import javax.inject.Inject
 class SplashActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var viewModelFactory: SplashViewModelFactory
+    lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel: SplashViewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(SplashViewModel::class.java) }
 

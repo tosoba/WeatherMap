@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import com.example.there.domain.city.City
 import com.example.there.domain.weather.Weather
 import com.example.there.weathermap.R
+import com.example.there.weathermap.di.vm.ViewModelFactory
 import com.example.there.weathermap.util.setWeather
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -19,7 +20,7 @@ import javax.inject.Inject
 class MapActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var viewModelFactory: MapViewModelFactory
+    lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel: MapViewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
