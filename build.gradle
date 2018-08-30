@@ -2,13 +2,13 @@
 
 buildscript {
     ext.kotlin_version = '1.2.30'
-    ext.kotlin_version = '1.2.21'
+
     ext {
         rxJavaVersion = "2.1.6"
         rxAndroidVersion = "2.0.1"
         junitVersion = "4.12"
         retrofitVersion = '2.3.0'
-        daggerVersion = '2.11'
+        daggerVersion = '2.15'
 
         libs = [
                 rxJava              : ('io.reactivex.rxjava2:rxjava:' + rxJavaVersion),

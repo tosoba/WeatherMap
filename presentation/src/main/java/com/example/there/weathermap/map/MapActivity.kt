@@ -8,12 +8,14 @@ import com.example.there.domain.city.City
 import com.example.there.domain.weather.Weather
 import com.example.there.weathermap.R
 import com.example.there.weathermap.di.vm.ViewModelFactory
+import com.example.there.weathermap.lifecycle.ConnectivityComponent
 import com.example.there.weathermap.util.setWeather
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 
@@ -30,6 +32,13 @@ class MapActivity : AppCompatActivity() {
 
     private val currentMarkers = ArrayList<MapMarker>()
 
+    private val connectivityComponent: ConnectivityComponent by lazy {
+        ConnectivityComponent(this, currentMarkers.size == 5, main_root_layout) {
+            map?.clear()
+            findCitiesInBounds()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -37,6 +46,7 @@ class MapActivity : AppCompatActivity() {
 
         setupObservers()
         initMap(savedInstanceState)
+        lifecycle.addObserver(connectivityComponent)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -81,8 +91,10 @@ class MapActivity : AppCompatActivity() {
                         .position(position)
                         .title(city.name))
                         ?.apply { setWeather(Weather.loading, resources) }
-                viewModel.loadWeather(marker!!, { weather, mark -> mark.setWeather(weather, resources) })
-                currentMarkers.add(MapMarker(city, marker))
+                if (connectivityComponent.lastConnectionStatus) {
+                    viewModel.loadWeather(marker!!) { weather, mark -> mark.setWeather(weather, resources) }
+                    currentMarkers.add(MapMarker(city, marker))
+                }
             }
         }
     }

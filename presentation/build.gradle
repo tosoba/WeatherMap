@@ -33,23 +33,23 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.google.android.gms:play-services-maps:11.8.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation project(":domain")
     implementation project(":data")
 
     // Retrofit
     implementation libs.retrofit
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation'com.squareup.retrofit2:converter-scalars:2.3.0'
+    implementation'com.squareup.retrofit2:converter-gson:2.3.0'
 
     // Dexter (permissions)
-    implementation 'com.karumi:dexter:4.2.0'
+    implementation 'com.karumi:dexter:5.0.0'
 
     // Lifecycle
     implementation "android.arch.lifecycle:runtime:$project.lifecycleVersion"
@@ -57,9 +57,9 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:$project.lifecycleVersion"
 
     // Dagger core
-    compile "com.google.dagger:dagger:$project.daggerVersion"
-    compile "com.google.dagger:dagger-android:$project.daggerVersion"
-    compile "com.google.dagger:dagger-android-support:$project.daggerVersion"
+    implementation"com.google.dagger:dagger:$project.daggerVersion"
+    implementation"com.google.dagger:dagger-android:$project.daggerVersion"
+    implementation"com.google.dagger:dagger-android-support:$project.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$project.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$project.daggerVersion"
 
@@ -71,5 +71,8 @@ dependencies {
     implementation libs.rxJava
     implementation libs.rxAndroid
 
-    compile "commons-io:commons-io:2.1"
+    // Reactive network
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:2.1.0'
+
+    implementation "commons-io:commons-io:2.4"
 }
