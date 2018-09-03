@@ -9,7 +9,9 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class SplashViewModel @Inject constructor(private val interactor: CityInteractor) : BaseViewModel() {
+class SplashViewModel @Inject constructor(
+        private val interactor: CityInteractor
+) : BaseViewModel() {
 
     fun loadCityData(data: String, onCompleted: () -> Unit) {
         isDbComplete(onDbComplete = {
