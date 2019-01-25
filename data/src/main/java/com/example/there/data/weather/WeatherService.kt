@@ -1,7 +1,7 @@
 package com.example.there.data.weather
 
 import com.example.there.data.Keys
-import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -10,5 +10,5 @@ interface WeatherService {
     fun loadWeather(
             @Path("key") key: String = Keys.WEATHER,
             @Path("position") position: String
-    ): Observable<WeatherEntity>
+    ): Single<WeatherEntity>
 }
