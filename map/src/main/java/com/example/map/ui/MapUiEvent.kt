@@ -1,4 +1,4 @@
-package com.example.map.ui.mvi
+package com.example.map.ui
 
 import com.example.core.model.City
 import com.example.core.mvi.wish.LoadAsyncWish

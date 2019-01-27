@@ -19,7 +19,6 @@ class LoadWeatherForCitiesFeature(
 ) : SimpleStatefulAsyncFeature<List<City>, List<CityWeather>, List<CityWeather>, ErrorOnlyNews>(
         initialState = AsyncState(false, emptyList()),
         actor = SimpleStatefulAsyncFeature.ActorImpl(transformer) { previousState ->
-            val input = this
             val citiesToLoad = filter { !previousState.value.map { cityWeather -> cityWeather.city }.contains(it) }
 
             if (citiesToLoad.isEmpty()) {
@@ -32,9 +31,7 @@ class LoadWeatherForCitiesFeature(
                         @Suppress("UNCHECKED_CAST")
                         it as Pair<Weather, City>
                     }.map { (weather, city) -> CityWeather(city, weather) }.toList()
-                }
-                        .toObservable()
-                        .map { SimpleStatefulAsyncFeature.Effect.Loaded(it) }
+                }.toObservable().map { SimpleStatefulAsyncFeature.Effect.Loaded(it) }
             }
         },
         reducer = SimpleStatefulAsyncFeature.ReducerImpl { this },

@@ -6,12 +6,14 @@ import com.badoo.mvicore.binder.using
 import com.example.core.model.City
 import com.example.core.model.Weather
 import com.example.core.mvi.state.AsyncState
+import com.example.coreandroid.ext.disposeWith
+import com.example.coreandroid.lifecycle.ConnectivityComponent
+import com.example.coreandroid.lifecycle.DisposablesComponent
 import com.example.coreandroid.ui.BaseMviActivity
 import com.example.map.R
 import com.example.map.ext.latLngBounds
 import com.example.map.ext.setWeather
 import com.example.map.model.CityWeather
-import com.example.map.ui.mvi.MapUiEvent
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -20,42 +22,55 @@ import com.google.android.gms.maps.model.MarkerOptions
 import io.reactivex.Observable
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.activity_map.*
 import javax.inject.Inject
+
 
 class MapActivity : BaseMviActivity<MapUiEvent>(
         R.layout.activity_map
 ) {
     private var map: GoogleMap? = null
-
     private val currentMarkers = HashMap<City, Marker>()
-
     private val mapInitialized: PublishSubject<Unit> = PublishSubject.create()
-
-//    @Inject
-//    lateinit var bindings: MapBindings
-
-    private val binder: Binder by lazy { Binder() }
 
     @Inject
     lateinit var viewModel: MapViewModel
 
-    //TODO: make this work somehow
-//    private val connectivityComponent: ConnectivityComponent by lazy {
-//        ConnectivityComponent(this, currentMarkers.size == 5, main_root_layout) {
-//            map?.clear()
-//            findCitiesInBounds()
-//        }
-//    }
+    private val connectivityComponent: ConnectivityComponent by lazy(LazyThreadSafetyMode.NONE) {
+        ConnectivityComponent(this, currentMarkers.size == 5, main_root_layout) {
+            map?.let {
+                it.clear()
+                events.onNext(MapUiEvent.OnMapCameraMove(it.latLngBounds))
+            }
+        }
+    }
+
+    private val disposablesComponent: DisposablesComponent by lazy(LazyThreadSafetyMode.NONE) {
+        DisposablesComponent()
+    }
+
+    private val citiesStateConsumer: CitiesStateConsumer by lazy(LazyThreadSafetyMode.NONE) {
+        CitiesStateConsumer()
+    }
+
+    private val citiesWeatherStateConsumer: CitiesWeatherStateConsumer by lazy(LazyThreadSafetyMode.NONE) {
+        CitiesWeatherStateConsumer()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        bindings.setup(this)
-        binder.bind(this to viewModel.findCitiesInBoundsFeature using MapUiEvent.FindCitiesTransformer)
-        binder.bind(this to viewModel.loadWeatherForCitiesFeature using MapUiEvent.LoadWeatherTransformer)
-        binder.bind(viewModel.findCitiesInBoundsFeature to citiesStateConsumer)
-        binder.bind(viewModel.loadWeatherForCitiesFeature to citiesWeatherStateConsumer)
+
         initMap()
-//        lifecycle.addObserver(connectivityComponent)
+
+        lifecycle.addObserver(connectivityComponent)
+        lifecycle.addObserver(disposablesComponent)
+    }
+
+    override fun Binder.setup() {
+        bind(this@MapActivity to viewModel.findCitiesInBoundsFeature using MapUiEvent.FindCitiesTransformer)
+        bind(this@MapActivity to viewModel.loadWeatherForCitiesFeature using MapUiEvent.LoadWeatherTransformer)
+        bind(viewModel.findCitiesInBoundsFeature to citiesStateConsumer)
+        bind(viewModel.loadWeatherForCitiesFeature to citiesWeatherStateConsumer)
     }
 
     private fun initMap() {
@@ -72,12 +87,9 @@ class MapActivity : BaseMviActivity<MapUiEvent>(
         }
     }
 
-    val citiesStateConsumer: CitiesStateConsumer by lazy { CitiesStateConsumer() }
-
     inner class CitiesStateConsumer : Consumer<AsyncState<List<City>>> {
         override fun accept(citiesState: AsyncState<List<City>>?) {
             citiesState?.let { state ->
-                //TODO: dispose this
                 Observable.just(state.value).delaySubscription(mapInitialized).subscribe { newCities ->
                     val keysToRemove = currentMarkers.keys.filter { !newCities.contains(it) }
                     keysToRemove.forEach {
@@ -91,19 +103,19 @@ class MapActivity : BaseMviActivity<MapUiEvent>(
                                     .position(position)
                                     .title(city.name)
                             )?.apply {
-                                tag = city.markerTag
                                 setWeather(Weather.loading, resources)
                                 currentMarkers[city] = this
                             }
                         }
                     }
-                    events.onNext(MapUiEvent.OnCitiesLoaded(newCities))
-                }
+
+                    if (connectivityComponent.lastConnectionStatus)
+                        events.onNext(MapUiEvent.OnCitiesLoaded(newCities))
+                }.disposeWith(disposablesComponent)
             }
         }
     }
 
-    val citiesWeatherStateConsumer: CitiesWeatherStateConsumer by lazy { CitiesWeatherStateConsumer() }
 
     inner class CitiesWeatherStateConsumer : Consumer<AsyncState<List<CityWeather>>> {
         override fun accept(citiesWeatherState: AsyncState<List<CityWeather>>?) {

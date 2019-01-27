@@ -9,13 +9,6 @@ import dagger.Provides
 
 @Module
 abstract class MapModule {
-
-
-
-
-
-
-
     @Module
     companion object {
         @Provides
@@ -24,7 +17,5 @@ abstract class MapModule {
                 factory: ViewModelFactory,
                 activity: MapActivity
         ): MapViewModel = ViewModelProviders.of(activity, factory).get(MapViewModel::class.java)
-
-
     }
 }

@@ -13,7 +13,6 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class ConnectivityComponent implements LifecycleObserver {
@@ -45,12 +44,9 @@ public class ConnectivityComponent implements LifecycleObserver {
         internetDisposable = ReactiveNetwork.observeInternetConnectivity()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean isConnectedToInternet) {
-                        lastConnectionStatus = isConnectedToInternet;
-                        handleConnectionStatus(isConnectedToInternet);
-                    }
+                .subscribe(isConnectedToInternet -> {
+                    lastConnectionStatus = isConnectedToInternet;
+                    handleConnectionStatus(isConnectedToInternet);
                 });
     }
 
@@ -75,8 +71,7 @@ public class ConnectivityComponent implements LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     public void clear() {
-        if (snackbar != null)
-            snackbar.dismiss();
+        if (snackbar != null) snackbar.dismiss();
         snackbar = null;
         safelyDispose(internetDisposable);
     }
@@ -90,12 +85,9 @@ public class ConnectivityComponent implements LifecycleObserver {
     private void showNoConnectionDialog() {
         snackbar = Snackbar
                 .make(parentView, "No internet connection.", Snackbar.LENGTH_LONG)
-                .setAction("Settings", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent settingsIntent = new Intent(Settings.ACTION_SETTINGS);
-                        activity.startActivity(settingsIntent);
-                    }
+                .setAction("Settings", view -> {
+                    Intent settingsIntent = new Intent(Settings.ACTION_SETTINGS);
+                    activity.startActivity(settingsIntent);
                 })
                 .setCallback(new Snackbar.Callback() {
                     @Override

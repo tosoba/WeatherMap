@@ -8,7 +8,6 @@ import com.example.core.mvi.feature.SimpleStatelessAsyncFeature
 import com.example.coreandroid.routing.Router
 import com.example.coreandroid.ui.BaseMviActivity
 import com.example.splash.R
-import com.example.splash.ui.mvi.SplashUiEvent
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
@@ -20,21 +19,18 @@ class SplashActivity : BaseMviActivity<SplashUiEvent>(
     @Inject
     lateinit var router: Router
 
-//    @Inject
-//    lateinit var bindings: SplashBindings
-
     @Inject
     lateinit var viewModel: SplashViewModel
 
-    private val binder: Binder by lazy { Binder() }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        bindings.setup(this)
-        binder.bind(this to viewModel.loadCitiesDataFeature using SplashUiEvent.Transformer named "SplashActivity.Events")
-        binder.bind(viewModel.loadCitiesDataFeature.news to this named "SplashActivity.News")
         if (savedInstanceState == null)
             events.onNext(SplashUiEvent.OnCreate(resources.openRawResource(R.raw.city_data)))
+    }
+
+    override fun Binder.setup() {
+        bind(this@SplashActivity to viewModel.loadCitiesDataFeature using SplashUiEvent.Transformer named "SplashActivity.Events")
+        bind(viewModel.loadCitiesDataFeature.news to this@SplashActivity named "SplashActivity.News")
     }
 
     //TODO: maybe extract that into a listener class and inject SplashActivity as SplashContract.View there with fun showMap()

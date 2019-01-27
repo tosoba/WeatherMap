@@ -9,11 +9,6 @@ import dagger.Provides
 
 @Module
 abstract class SplashModule {
-
-
-
-
-
     @Module
     companion object {
         @Provides
@@ -22,7 +17,5 @@ abstract class SplashModule {
                 factory: ViewModelFactory,
                 activity: SplashActivity
         ): SplashViewModel = ViewModelProviders.of(activity, factory).get(SplashViewModel::class.java)
-
-
     }
 }

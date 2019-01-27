@@ -1,4 +1,4 @@
-package com.example.splash.ui.mvi
+package com.example.splash.ui
 
 import com.example.core.mvi.wish.LoadAsyncWish
 import java.io.InputStream
