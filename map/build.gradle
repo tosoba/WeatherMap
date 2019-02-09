@@ -3,14 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-project.ext {
-    supportLibraryVersion = "28.0.0"
-    daggerVersion = "2.15"
-    rxJavaVersion = "2.1.0"
-    rxAndroidVersion = "2.0.1"
-    lifecycleVersion = "1.1.1"
-}
-
 android {
     compileSdkVersion 28
 
@@ -47,23 +39,23 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
 
     // Dagger core
-    implementation"com.google.dagger:dagger:$project.daggerVersion"
-    implementation"com.google.dagger:dagger-android:$project.daggerVersion"
-    implementation"com.google.dagger:dagger-android-support:$project.daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$project.daggerVersion"
-    kapt "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    implementation"com.google.dagger:dagger:$daggerVersion"
+    implementation"com.google.dagger:dagger-android:$daggerVersion"
+    implementation"com.google.dagger:dagger-android-support:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     // Dagger Android
-    annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
 
     implementation 'com.github.badoo.mvicore:mvicore:1.1.4'
     implementation 'com.github.badoo.mvicore:mvicore-android:1.1.4'
 
     // Lifecycle
-    implementation "android.arch.lifecycle:runtime:$project.lifecycleVersion"
-    implementation "android.arch.lifecycle:extensions:$project.lifecycleVersion"
-    annotationProcessor "android.arch.lifecycle:compiler:$project.lifecycleVersion"
+    implementation "android.arch.lifecycle:runtime:$lifecycleVersion"
+    implementation "android.arch.lifecycle:extensions:$lifecycleVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$lifecycleVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

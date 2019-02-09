@@ -44,15 +44,15 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:1.1.1"
 
     // Dagger core
-    implementation"com.google.dagger:dagger:$project.daggerVersion"
-    implementation"com.google.dagger:dagger-android:$project.daggerVersion"
-    implementation"com.google.dagger:dagger-android-support:$project.daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$project.daggerVersion"
-    kapt "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    implementation"com.google.dagger:dagger:$daggerVersion"
+    implementation"com.google.dagger:dagger-android:$daggerVersion"
+    implementation"com.google.dagger:dagger-android-support:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     // Dagger Android
-    annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
 
     implementation 'com.github.badoo.mvicore:mvicore:1.1.4'
     implementation 'com.github.badoo.mvicore:mvicore-android:1.1.4'

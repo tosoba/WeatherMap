@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splash_shimmer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:shimmer_duration="1000"
     tools:context="com.example.splash.ui.SplashActivity">
 
-    <ImageView
-        android:id="@+id/splash_logo_image_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/data_loading_progress_bar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/splash_logo"/>
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/data_loading_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/splash_logo_image_view"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        <ImageView
+            android:id="@+id/splash_logo_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/splash_logo" />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/loading"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>

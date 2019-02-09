@@ -22,9 +22,8 @@
 
         <activity
             android:name="com.example.map.ui.MapActivity"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main" />
 
-        </activity>
         <activity
             android:name="com.example.splash.ui.SplashActivity"
             android:noHistory="true">
